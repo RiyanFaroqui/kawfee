@@ -1,0 +1,1 @@
+export { BakedGoodsPromoCardSection } from "./BakedGoodsPromoCardSection";
