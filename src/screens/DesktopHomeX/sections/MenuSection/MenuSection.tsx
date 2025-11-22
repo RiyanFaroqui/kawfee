@@ -1,42 +1,25 @@
 import React, { useState } from "react";
+import { useBag } from "../../../../context/BagContext";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../../../../components/ui/select";
+import { ProductPage } from "../ProductPage";
 
 interface MenuItem {
   name: string;
   image: string;
 }
 
-interface MenuCategory {
-  title: string;
-  items: MenuItem[];
-}
-
-const drinkCategories: MenuCategory[] = [
-  {
-    title: "Drinks",
-    items: [
-      { name: "Hot Coffee", image: "/image-10.png" },
-      { name: "Cold Coffee", image: "/image-9.png" },
-      { name: "Hot Tea", image: "/image-10.png" },
-      { name: "Cold Tea", image: "/image-9.png" },
-      { name: "Blended", image: "/image-10.png" },
-      { name: "Refreshers", image: "/refreshersblog-68fd8a8a-2270-49a6-a5a1-73adc933b10a-1000x-1.png" },
-      { name: "Bottled", image: "/image-9.png" },
-      { name: "Other", image: "/image-10.png" },
-    ],
-  },
-];
-
-const foodCategories: MenuCategory[] = [
-  {
-    title: "Food",
-    items: [
-      { name: "Breakfast", image: "/image-9.png" },
-      { name: "Lunch", image: "/image-10.png" },
-      { name: "Bakery", image: "/image-9.png" },
-      { name: "Snacks", image: "/image-10.png" },
-      { name: "Treats", image: "/image-9.png" },
-    ],
-  },
+const coldCoffeeItems: MenuItem[] = [
+  { name: "House Cold Brew", image: "/image-9.png" },
+  { name: "Iced Latte", image: "/image-10.png" },
+  { name: "Iced Coffee", image: "/image-9.png" },
+  { name: "Iced Espresso", image: "/image-10.png" },
+  { name: "Iced Macchiato", image: "/cbb44b74-98a1-40db-bf9d-4ea3fb0cb225-1.png" },
 ];
 
 const sidebarItems = [
@@ -55,10 +38,26 @@ const sidebarItems = [
 ];
 
 export const MenuSection = (): JSX.Element => {
+  const { itemCount } = useBag();
   const [activeTab, setActiveTab] = useState("Menu");
+  const [selectedSubcategory, setSelectedSubcategory] = useState<string | null>(null);
+  const [selectedProduct, setSelectedProduct] = useState<string | null>(null);
+  const [selectedLocation, setSelectedLocation] = useState("Choose Location");
+
+  if (selectedProduct) {
+    return (
+      <ProductPage
+        onBack={() => setSelectedProduct(null)}
+        category="Drinks"
+        subcategory="Cold Coffee"
+        productName={selectedProduct}
+        productImage="/cbb44b74-98a1-40db-bf9d-4ea3fb0cb225-1.png"
+      />
+    );
+  }
 
   return (
-    <div className="w-full bg-white">
+    <div className="w-full bg-white flex flex-col min-h-screen">
       <div className="sticky top-[142px] z-40 bg-[#e8e8e8] border-b border-gray-300">
         <div className="flex items-center px-6 py-4 max-w-[1512px] mx-auto gap-12">
           {["Menu", "Featured", "Previous", "Favourite"].map((tab) => (
@@ -76,8 +75,8 @@ export const MenuSection = (): JSX.Element => {
         </div>
       </div>
 
-      <div className="flex w-full max-w-[1512px] mx-auto">
-        <aside className="w-[250px] border-r border-gray-300 px-6 py-8 flex-shrink-0">
+      <div className="flex flex-1 w-full max-w-[1512px] mx-auto">
+        <aside className="w-[250px] border-r border-gray-300 px-6 py-8 flex-shrink-0 overflow-y-auto">
           {sidebarItems.map((section, index) => (
             <div key={index} className="mb-8">
               <h3 className="[font-family:'SF_Pro-Bold',Helvetica] font-bold text-black text-lg mb-4">
@@ -86,12 +85,12 @@ export const MenuSection = (): JSX.Element => {
               <ul className="flex flex-col gap-3">
                 {section.items.map((item, itemIndex) => (
                   <li key={itemIndex}>
-                    <a
-                      href="#"
-                      className="[font-family:'SF_Pro-Regular',Helvetica] font-normal text-black text-base hover:text-[#ff8d28] transition-colors"
+                    <button
+                      onClick={() => setSelectedSubcategory(item)}
+                      className="[font-family:'SF_Pro-Regular',Helvetica] font-normal text-black text-base hover:text-[#ff8d28] transition-colors text-left w-full"
                     >
                       {item}
-                    </a>
+                    </button>
                   </li>
                 ))}
               </ul>
@@ -99,74 +98,108 @@ export const MenuSection = (): JSX.Element => {
           ))}
         </aside>
 
-        <main className="flex-1 px-12 py-8">
-          {activeTab === "Menu" && (
+        <main className="flex-1 px-12 py-8 overflow-y-auto">
+          {activeTab === "Menu" && !selectedSubcategory && (
             <div className="space-y-16">
-              {/* Drinks Section */}
               <div>
                 <h2 className="[font-family:'SF_Pro-Bold',Helvetica] font-bold text-4xl mb-8 text-black border-b-2 border-black pb-4">
                   Drinks
                 </h2>
                 <div className="grid grid-cols-2 gap-12">
-                  {drinkCategories[0].items.map((item, index) => (
-                    <div key={index} className="flex items-center gap-8">
-                      <img
-                        src={item.image}
-                        alt={item.name}
-                        className="w-[150px] h-[150px] rounded-[16px] object-cover flex-shrink-0"
-                      />
-                      <h3 className="[font-family:'SF_Pro-Bold',Helvetica] font-bold text-3xl text-black">
-                        {item.name}
-                      </h3>
-                    </div>
-                  ))}
+                  {["Hot Coffee", "Cold Coffee", "Hot Tea", "Cold Tea", "Blended", "Refreshers", "Bottled", "Other"].map(
+                    (item, index) => (
+                      <button
+                        key={index}
+                        onClick={() => setSelectedSubcategory(item)}
+                        className="flex items-center gap-8 hover:opacity-80 transition-opacity text-left"
+                      >
+                        <img
+                          src="/image-10.png"
+                          alt={item}
+                          className="w-[150px] h-[150px] rounded-[16px] object-cover flex-shrink-0"
+                        />
+                        <h3 className="[font-family:'SF_Pro-Bold',Helvetica] font-bold text-3xl text-black">
+                          {item}
+                        </h3>
+                      </button>
+                    )
+                  )}
                 </div>
               </div>
 
-              {/* Food Section */}
               <div>
                 <h2 className="[font-family:'SF_Pro-Bold',Helvetica] font-bold text-4xl mb-8 text-black border-b-2 border-black pb-4">
                   Food
                 </h2>
                 <div className="grid grid-cols-2 gap-12">
-                  {foodCategories[0].items.map((item, index) => (
-                    <div key={index} className="flex items-center gap-8">
+                  {["Breakfast", "Lunch", "Bakery", "Snacks", "Treats"].map((item, index) => (
+                    <button
+                      key={index}
+                      onClick={() => setSelectedSubcategory(item)}
+                      className="flex items-center gap-8 hover:opacity-80 transition-opacity text-left"
+                    >
                       <img
-                        src={item.image}
-                        alt={item.name}
+                        src="/image-10.png"
+                        alt={item}
                         className="w-[150px] h-[150px] rounded-[16px] object-cover flex-shrink-0"
                       />
                       <h3 className="[font-family:'SF_Pro-Bold',Helvetica] font-bold text-3xl text-black">
-                        {item.name}
+                        {item}
                       </h3>
-                    </div>
+                    </button>
                   ))}
                 </div>
               </div>
 
-              {/* Home Section */}
               <div>
                 <h2 className="[font-family:'SF_Pro-Bold',Helvetica] font-bold text-4xl mb-8 text-black border-b-2 border-black pb-4">
                   Home
                 </h2>
                 <div className="grid grid-cols-2 gap-12">
-                  {[
-                    { name: "Instant", image: "/image-9.png" },
-                    { name: "Pods", image: "/image-10.png" },
-                    { name: "Containers", image: "/image-9.png" },
-                  ].map((item, index) => (
-                    <div key={index} className="flex items-center gap-8">
+                  {["Instant", "Pods", "Containers"].map((item, index) => (
+                    <button
+                      key={index}
+                      onClick={() => setSelectedSubcategory(item)}
+                      className="flex items-center gap-8 hover:opacity-80 transition-opacity text-left"
+                    >
                       <img
-                        src={item.image}
-                        alt={item.name}
+                        src="/image-10.png"
+                        alt={item}
                         className="w-[150px] h-[150px] rounded-[16px] object-cover flex-shrink-0"
                       />
                       <h3 className="[font-family:'SF_Pro-Bold',Helvetica] font-bold text-3xl text-black">
-                        {item.name}
+                        {item}
                       </h3>
-                    </div>
+                    </button>
                   ))}
                 </div>
+              </div>
+            </div>
+          )}
+
+          {activeTab === "Menu" && selectedSubcategory === "Cold Coffee" && (
+            <div>
+              <h2 className="[font-family:'SF_Pro-Bold',Helvetica] font-bold text-3xl mb-8 text-black border-b-2 border-black pb-4">
+                <span className="text-gray-400">Drinks / </span>
+                <span className="text-black">Cold Coffee</span>
+              </h2>
+              <div className="grid grid-cols-2 gap-12">
+                {coldCoffeeItems.map((item, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setSelectedProduct(item.name)}
+                    className="flex items-center gap-8 hover:opacity-80 transition-opacity text-left"
+                  >
+                    <img
+                      src={item.image}
+                      alt={item.name}
+                      className="w-[150px] h-[150px] rounded-[16px] object-cover flex-shrink-0"
+                    />
+                    <h3 className="[font-family:'SF_Pro-Bold',Helvetica] font-bold text-3xl text-black">
+                      {item.name}
+                    </h3>
+                  </button>
+                ))}
               </div>
             </div>
           )}
@@ -195,6 +228,35 @@ export const MenuSection = (): JSX.Element => {
             </div>
           )}
         </main>
+      </div>
+
+      <div className="sticky bottom-0 left-0 right-0 z-40 bg-[#ff8d28] py-4 px-6">
+        <div className="max-w-[1512px] mx-auto flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <p className="[font-family:'SF_Pro-Bold',Helvetica] font-bold text-white text-sm">
+              For Product Availability
+            </p>
+            <Select value={selectedLocation} onValueChange={setSelectedLocation}>
+              <SelectTrigger className="w-[250px] h-10 bg-white border-none [font-family:'SF_Pro-Medium',Helvetica] font-medium text-black text-sm">
+                <SelectValue placeholder="Choose Location" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="Kawfee BIT">Kawfee BIT</SelectItem>
+                <SelectItem value="Kawfee Downtown">Kawfee Downtown</SelectItem>
+                <SelectItem value="Kawfee Campus">Kawfee Campus</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
+          <button className="flex items-center justify-center w-12 h-12 bg-white rounded hover:bg-gray-100 transition-colors relative">
+            <span className="text-2xl">🛍</span>
+            {itemCount > 0 && (
+              <span className="absolute top-0 right-0 w-5 h-5 bg-red-500 text-white rounded-full flex items-center justify-center text-xs font-bold">
+                {itemCount}
+              </span>
+            )}
+          </button>
+        </div>
       </div>
     </div>
   );
