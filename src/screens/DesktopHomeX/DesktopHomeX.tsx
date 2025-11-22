@@ -7,6 +7,7 @@ import { PromoCardContainerSection } from "./sections/PromoCardContainerSection"
 import { BakedGoodsPromoCardSection } from "./sections/BakedGoodsPromoCardSection";
 import { PromotionalBannerSection } from "./sections/PromotionalBannerSection";
 import { RewardsSection } from "./sections/RewardsSection";
+import { MenuSection } from "./sections/MenuSection";
 
 export const DesktopHomeX = (): JSX.Element => {
   const [activeTab, setActiveTab] = useState("Menu");
@@ -15,7 +16,9 @@ export const DesktopHomeX = (): JSX.Element => {
     <div className="bg-white overflow-hidden w-full flex flex-col">
       <NavigationBarSection activeTab={activeTab} onTabChange={setActiveTab} />
       <PromotionalBannerSection />
-      {activeTab === "Menu" && (
+      {activeTab === "Menu" ? (
+        <MenuSection />
+      ) : (
         <div className="flex flex-col w-full items-center">
           <div className="w-full max-w-[1292px] px-4 flex flex-col gap-11 py-11">
             <FeaturedProductsSection />
