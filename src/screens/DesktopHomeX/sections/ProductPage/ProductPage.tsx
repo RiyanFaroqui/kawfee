@@ -11,6 +11,8 @@ import {
 
 interface ProductPageProps {
   onBack: () => void;
+  onNavigateToCategory: (category: string) => void;
+  onNavigateToSubcategory: (subcategory: string) => void;
   category: string;
   subcategory: string;
   productName: string;
@@ -19,6 +21,8 @@ interface ProductPageProps {
 
 export const ProductPage = ({
   onBack,
+  onNavigateToCategory,
+  onNavigateToSubcategory,
   category,
   subcategory,
   productName,
@@ -62,8 +66,20 @@ export const ProductPage = ({
   return (
     <div className="w-full bg-white min-h-screen flex flex-col">
       <div className="sticky top-[142px] z-40 bg-gray-200 border-b border-gray-300 px-6 py-3">
-        <p className="text-gray-600 [font-family:'SF_Pro-Regular',Helvetica] text-sm">
-          Menu / {category} / {subcategory} / <span className="text-black font-bold">{productName}</span>
+        <p className="text-gray-600 [font-family:'SF_Pro-Regular',Helvetica] text-sm flex items-center gap-2">
+          <button onClick={onBack} className="hover:text-black transition-colors">
+            Menu
+          </button>
+          <span>/</span>
+          <button onClick={() => onNavigateToCategory(category)} className="hover:text-black transition-colors">
+            {category}
+          </button>
+          <span>/</span>
+          <button onClick={() => onNavigateToSubcategory(subcategory)} className="hover:text-black transition-colors">
+            {subcategory}
+          </button>
+          <span>/</span>
+          <span className="text-black font-bold">{productName}</span>
         </p>
       </div>
 

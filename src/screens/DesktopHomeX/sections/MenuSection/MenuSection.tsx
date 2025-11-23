@@ -48,6 +48,11 @@ export const MenuSection = (): JSX.Element => {
     return (
       <ProductPage
         onBack={() => setSelectedProduct(null)}
+        onNavigateToCategory={() => {
+          setSelectedProduct(null);
+          setSelectedSubcategory(null);
+        }}
+        onNavigateToSubcategory={() => setSelectedProduct(null)}
         category="Drinks"
         subcategory="Cold Coffee"
         productName={selectedProduct}
