@@ -8,6 +8,7 @@ import {
   SelectValue,
 } from "../../../../components/ui/select";
 import { ProductPage } from "../ProductPage";
+import { BagSection } from "../BagSection";
 
 interface MenuItem {
   name: string;
@@ -43,6 +44,16 @@ export const MenuSection = (): JSX.Element => {
   const [selectedSubcategory, setSelectedSubcategory] = useState<string | null>(null);
   const [selectedProduct, setSelectedProduct] = useState<string | null>(null);
   const [selectedLocation, setSelectedLocation] = useState("Choose Location");
+  const [showBag, setShowBag] = useState(false);
+
+  if (showBag) {
+    return (
+      <BagSection
+        onBack={() => setShowBag(false)}
+        selectedLocation={selectedLocation}
+      />
+    );
+  }
 
   if (selectedProduct) {
     return (
@@ -256,7 +267,10 @@ export const MenuSection = (): JSX.Element => {
             </Select>
           </div>
 
-          <button className="flex items-center justify-center w-12 h-12 bg-white rounded hover:bg-gray-100 transition-colors relative">
+          <button
+            onClick={() => setShowBag(true)}
+            className="flex items-center justify-center w-12 h-12 bg-white rounded hover:bg-gray-100 transition-colors relative"
+          >
             <span className="text-2xl">🛍</span>
             {itemCount > 0 && (
               <span className="absolute top-0 right-0 w-5 h-5 bg-red-500 text-white rounded-full flex items-center justify-center text-xs font-bold">
