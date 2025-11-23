@@ -47,7 +47,10 @@ export const MenuSection = (): JSX.Element => {
   if (selectedProduct) {
     return (
       <ProductPage
-        onBack={() => setSelectedProduct(null)}
+        onBack={() => {
+          setSelectedProduct(null);
+          setSelectedSubcategory(null);
+        }}
         onNavigateToCategory={() => {
           setSelectedProduct(null);
           setSelectedSubcategory(null);
