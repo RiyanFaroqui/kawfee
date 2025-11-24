@@ -18,10 +18,17 @@ export const BagSection = ({ onBack, selectedLocation }: BagSectionProps): JSX.E
   const [store, setStore] = React.useState(selectedLocation || "Kawfee BIT");
   const [fulfillmentMethod, setFulfillmentMethod] = React.useState("Pickup");
   const [pickupTime, setPickupTime] = React.useState("in 6-7 minutes");
+  const [location, setLocation] = React.useState("OTU Science Building");
+  const [room, setRoom] = React.useState("SCI 1350");
+  const [notes, setNotes] = React.useState("");
+  const [tips, setTips] = React.useState("0.00");
 
   const subtotal = items.reduce((sum, item) => sum + item.price, 0);
-  const tax = subtotal * 0.13;
-  const total = subtotal + tax;
+  const deliveryFee = fulfillmentMethod === "Delivery" ? 2.50 : 0;
+  const tipAmount = parseFloat(tips) || 0;
+  const taxBase = subtotal + deliveryFee + tipAmount;
+  const tax = taxBase * 0.13;
+  const total = subtotal + deliveryFee + tipAmount + tax;
   const rewards = Math.round(subtotal * 5);
 
   return (
@@ -76,21 +83,82 @@ export const BagSection = ({ onBack, selectedLocation }: BagSectionProps): JSX.E
               </Select>
             </div>
 
-            <div>
-              <label className="[font-family:'SF_Pro-Bold',Helvetica] font-bold text-sm text-black block mb-2">
-                Pickup Time
-              </label>
-              <Select value={pickupTime} onValueChange={setPickupTime}>
-                <SelectTrigger className="w-full h-12 bg-white [font-family:'SF_Pro-Medium',Helvetica] font-medium text-black">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="in 6-7 minutes">in 6-7 minutes</SelectItem>
-                  <SelectItem value="in 15 minutes">in 15 minutes</SelectItem>
-                  <SelectItem value="in 30 minutes">in 30 minutes</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
+            {fulfillmentMethod === "Pickup" ? (
+              <div>
+                <label className="[font-family:'SF_Pro-Bold',Helvetica] font-bold text-sm text-black block mb-2">
+                  Pickup Time
+                </label>
+                <Select value={pickupTime} onValueChange={setPickupTime}>
+                  <SelectTrigger className="w-full h-12 bg-white [font-family:'SF_Pro-Medium',Helvetica] font-medium text-black">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="in 6-7 minutes">in 6-7 minutes</SelectItem>
+                    <SelectItem value="in 15 minutes">in 15 minutes</SelectItem>
+                    <SelectItem value="in 30 minutes">in 30 minutes</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            ) : (
+              <>
+                <div>
+                  <label className="[font-family:'SF_Pro-Bold',Helvetica] font-bold text-sm text-black block mb-2">
+                    Location
+                  </label>
+                  <Select value={location} onValueChange={setLocation}>
+                    <SelectTrigger className="w-full h-12 bg-white [font-family:'SF_Pro-Medium',Helvetica] font-medium text-black">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="OTU Science Building">OTU Science Building</SelectItem>
+                      <SelectItem value="OTU Engineering">OTU Engineering</SelectItem>
+                      <SelectItem value="OTU Library">OTU Library</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div>
+                  <label className="[font-family:'SF_Pro-Bold',Helvetica] font-bold text-sm text-black block mb-2">
+                    Room
+                  </label>
+                  <Select value={room} onValueChange={setRoom}>
+                    <SelectTrigger className="w-full h-12 bg-white [font-family:'SF_Pro-Medium',Helvetica] font-medium text-black">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="SCI 1350">SCI 1350</SelectItem>
+                      <SelectItem value="SCI 1351">SCI 1351</SelectItem>
+                      <SelectItem value="SCI 1352">SCI 1352</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div>
+                  <label className="[font-family:'SF_Pro-Bold',Helvetica] font-bold text-sm text-black block mb-2">
+                    Notes
+                  </label>
+                  <textarea
+                    value={notes}
+                    onChange={(e) => setNotes(e.target.value)}
+                    placeholder="Deliver to the middle of the front row, red sweater, black cap."
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md [font-family:'SF_Pro-Regular',Helvetica] bg-white text-black placeholder-gray-500 min-h-[120px] resize-none"
+                  />
+                </div>
+
+                <div>
+                  <label className="[font-family:'SF_Pro-Bold',Helvetica] font-bold text-sm text-black block mb-2">
+                    Tips
+                  </label>
+                  <input
+                    type="number"
+                    step="0.01"
+                    value={tips}
+                    onChange={(e) => setTips(e.target.value)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md [font-family:'SF_Pro-Regular',Helvetica] bg-white text-black"
+                  />
+                </div>
+              </>
+            )}
           </div>
         </div>
 
@@ -146,6 +214,18 @@ export const BagSection = ({ onBack, selectedLocation }: BagSectionProps): JSX.E
                   <span>Subtotal</span>
                   <span>${subtotal.toFixed(2)}</span>
                 </div>
+                {fulfillmentMethod === "Delivery" && (
+                  <>
+                    <div className="flex justify-between [font-family:'SF_Pro-Regular',Helvetica] text-gray-700">
+                      <span>Delivery Fee</span>
+                      <span>${deliveryFee.toFixed(2)}</span>
+                    </div>
+                    <div className="flex justify-between [font-family:'SF_Pro-Regular',Helvetica] text-gray-700">
+                      <span>Tip</span>
+                      <span>${tipAmount.toFixed(2)}</span>
+                    </div>
+                  </>
+                )}
                 <div className="flex justify-between [font-family:'SF_Pro-Regular',Helvetica] text-gray-700">
                   <span>Tax</span>
                   <span>${tax.toFixed(2)}</span>
