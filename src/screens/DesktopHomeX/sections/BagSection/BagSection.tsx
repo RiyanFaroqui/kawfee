@@ -62,8 +62,8 @@ export const BagSection = ({ onBack, selectedLocation }: BagSectionProps): JSX.E
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="Kawfee BIT">Kawfee BIT</SelectItem>
-                  <SelectItem value="Kawfee Downtown">Kawfee Downtown</SelectItem>
-                  <SelectItem value="Kawfee Campus">Kawfee Campus</SelectItem>
+                  <SelectItem value="Kawfee DC">Kawfee DC</SelectItem>
+                  <SelectItem value="Kawfee Windfields">Kawfee Windfields</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -110,9 +110,10 @@ export const BagSection = ({ onBack, selectedLocation }: BagSectionProps): JSX.E
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="OTU Science Building">OTU Science Building</SelectItem>
-                      <SelectItem value="OTU Engineering">OTU Engineering</SelectItem>
-                      <SelectItem value="OTU Library">OTU Library</SelectItem>
+                      <SelectItem value="OTU Science Building">Science Building</SelectItem>
+                      <SelectItem value="OTU Engineering">Business & IT Building</SelectItem>
+                      <SelectItem value="OTU Library">Library</SelectItem>
+                      <SelectItem value="OTU SIRC">SIRC</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -127,8 +128,8 @@ export const BagSection = ({ onBack, selectedLocation }: BagSectionProps): JSX.E
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="SCI 1350">SCI 1350</SelectItem>
-                      <SelectItem value="SCI 1351">SCI 1351</SelectItem>
-                      <SelectItem value="SCI 1352">SCI 1352</SelectItem>
+                      <SelectItem value="SCI 1351">SCI 1120</SelectItem>
+                      <SelectItem value="SCI 1352">SCI 1140</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -195,7 +196,7 @@ export const BagSection = ({ onBack, selectedLocation }: BagSectionProps): JSX.E
                         ${item.price.toFixed(2)}
                       </p>
                       <div className="flex gap-2 justify-end">
-                        <button className="text-lg hover:opacity-70 transition-opacity">😊</button>
+                        <button className="text-lg hover:opacity-70 transition-opacity">✎</button>
                         <button className="text-lg hover:opacity-70 transition-opacity">♡</button>
                         <button
                           onClick={() => removeItem(item.id)}
@@ -242,7 +243,7 @@ export const BagSection = ({ onBack, selectedLocation }: BagSectionProps): JSX.E
 
               <div className="bg-[#fdf5de] rounded-[12px] p-6">
                 <p className="[font-family:'SF_Pro-Regular',Helvetica] text-black text-center">
-                  You can get {rewards} 🛍 from this order!
+                  You can get {rewards} 🫘 from this order!
                 </p>
               </div>
 

@@ -38,7 +38,7 @@ export const ProductPage = ({
   const [addIns, setAddIns] = useState("Regular Ice");
 
   const sizes: Record<string, number> = {
-    Small: 2.95,
+    Small: 3.95,
     Medium: 4.95,
     Large: 5.95,
   };
@@ -96,7 +96,7 @@ export const ProductPage = ({
             </h1>
             <div className="flex items-center gap-2 mb-6">
               <span className="text-orange-500 [font-family:'SF_Pro-Bold',Helvetica] font-bold text-sm">
-                200 🛍 item
+                200 🫘 item
               </span>
             </div>
             <p className="[font-family:'SF_Pro-Regular',Helvetica] text-black text-lg mb-4 flex items-center gap-2">
@@ -247,7 +247,7 @@ export const ProductPage = ({
 
           <div className="bg-[#fdf5de] rounded-[12px] p-6 text-center">
             <p className="[font-family:'SF_Pro-Bold',Helvetica] font-bold text-orange-500 text-lg mb-2">
-              {sizes[selectedSize]} 🛍 item
+              {sizes[selectedSize]} 🫘 item
             </p>
             <p className="[font-family:'SF_Pro-Bold',Helvetica] font-bold text-3xl text-black mb-4">
               ${sizes[selectedSize].toFixed(2)}

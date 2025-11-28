@@ -16,11 +16,11 @@ interface MenuItem {
 }
 
 const coldCoffeeItems: MenuItem[] = [
-  { name: "House Cold Brew", image: "/image-9.png" },
-  { name: "Iced Latte", image: "/image-10.png" },
-  { name: "Iced Coffee", image: "/image-9.png" },
-  { name: "Iced Espresso", image: "/image-10.png" },
-  { name: "Iced Macchiato", image: "/cbb44b74-98a1-40db-bf9d-4ea3fb0cb225-1.png" },
+  { name: "House Cold Brew", image: "/cold brew.jpg" },
+  { name: "Iced Latte", image: "/iced latte.jpg" },
+  { name: "Iced Coffee", image: "/iced coffee.jpg" },
+  { name: "Iced Espresso", image: "/iced espresso.jpg" },
+  { name: "Iced Macchiato", image: "iced macchiato.jpg" },
 ];
 
 const sidebarItems = [
@@ -55,6 +55,28 @@ export const MenuSection = (): JSX.Element => {
     );
   }
 
+  const categoryImages: Record<string, string> = {
+  "Hot Coffee": "/hot coffee.jpeg",
+  "Cold Coffee": "/cold brew.jpg",
+  "Hot Tea": "/hot tea.jpg",
+  "Cold Tea": "/cold tea.jpg",
+  "Refreshers": "/refresher.jpg",
+  Blended: "/blended.jpg",
+  Bottled: "/bottled.jpg",
+  Other: "/other.jpg",
+
+  Breakfast: "/breakfast.jpg",
+  Lunch: "/lunch.jpg",
+  Bakery: "/bakery.jpg",
+  Snacks: "/snacks.jpg",
+  Treats: "/treats.jpg",
+
+  Instant: "/instant.jpg",
+  Pods: "/pods.jpg",
+  Containers: "/containers.jpg",
+};
+
+
   if (selectedProduct) {
     return (
       <ProductPage
@@ -70,7 +92,7 @@ export const MenuSection = (): JSX.Element => {
         category="Drinks"
         subcategory="Cold Coffee"
         productName={selectedProduct}
-        productImage="/cbb44b74-98a1-40db-bf9d-4ea3fb0cb225-1.png"
+        productImage="/iced macchiato.jpg"
       />
     );
   }
@@ -133,7 +155,7 @@ export const MenuSection = (): JSX.Element => {
                         className="flex items-center gap-8 hover:opacity-80 transition-opacity text-left"
                       >
                         <img
-                          src="/image-10.png"
+                          src={categoryImages[item]}
                           alt={item}
                           className="w-[150px] h-[150px] rounded-[16px] object-cover flex-shrink-0"
                         />
@@ -158,7 +180,7 @@ export const MenuSection = (): JSX.Element => {
                       className="flex items-center gap-8 hover:opacity-80 transition-opacity text-left"
                     >
                       <img
-                        src="/image-10.png"
+                        src={categoryImages[item]}
                         alt={item}
                         className="w-[150px] h-[150px] rounded-[16px] object-cover flex-shrink-0"
                       />
@@ -182,7 +204,7 @@ export const MenuSection = (): JSX.Element => {
                       className="flex items-center gap-8 hover:opacity-80 transition-opacity text-left"
                     >
                       <img
-                        src="/image-10.png"
+                        src={categoryImages[item]}
                         alt={item}
                         className="w-[150px] h-[150px] rounded-[16px] object-cover flex-shrink-0"
                       />
@@ -261,8 +283,8 @@ export const MenuSection = (): JSX.Element => {
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="Kawfee BIT">Kawfee BIT</SelectItem>
-                <SelectItem value="Kawfee Downtown">Kawfee Downtown</SelectItem>
-                <SelectItem value="Kawfee Campus">Kawfee Campus</SelectItem>
+                <SelectItem value="Kawfee Downtown">Kawfee DC</SelectItem>
+                <SelectItem value="Kawfee Campus">Kawfee Windfields</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -271,7 +293,7 @@ export const MenuSection = (): JSX.Element => {
             onClick={() => setShowBag(true)}
             className="flex items-center justify-center w-12 h-12 bg-white rounded hover:bg-gray-100 transition-colors relative"
           >
-            <span className="text-2xl">🛍</span>
+            <span className="text-2xl">🧺</span>
             {itemCount > 0 && (
               <span className="absolute top-0 right-0 w-5 h-5 bg-red-500 text-white rounded-full flex items-center justify-center text-xs font-bold">
                 {itemCount}

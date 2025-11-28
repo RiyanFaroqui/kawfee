@@ -24,7 +24,9 @@ export const NavigationBarSection = ({ activeTab, onTabChange }: NavigationBarSe
     <header className="w-full bg-white shadow-[0px_4px_4px_#00000040] sticky top-0 z-50">
       <nav className="flex items-center justify-between px-[35px] py-[15px] max-w-[1512px] mx-auto">
         <div className="flex items-center gap-[35px]">
-          <img className="w-[85px] h-[85px]" alt="Logo" src="/logo-1.png" />
+          <button onClick={() => onTabChange("Home")} className="cursor-pointer">
+            <img className="w-[85px] h-[85px]" alt="Logo" src="/logo-1.png" />
+          </button>
 
           <ul className="flex items-center gap-[50px] list-none">
             {navigationItems.map((item) => {
@@ -56,9 +58,9 @@ export const NavigationBarSection = ({ activeTab, onTabChange }: NavigationBarSe
               <SelectValue placeholder="Choose Location" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="location1">Location 1</SelectItem>
-              <SelectItem value="location2">Location 2</SelectItem>
-              <SelectItem value="location3">Location 3</SelectItem>
+              <SelectItem value="location1">Kawfee BIT</SelectItem>
+              <SelectItem value="location2">Kawfee DC</SelectItem>
+              <SelectItem value="location3">Kawfee Windfields</SelectItem>
             </SelectContent>
           </Select>
 
