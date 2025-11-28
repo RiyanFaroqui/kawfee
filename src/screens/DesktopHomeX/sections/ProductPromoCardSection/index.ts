@@ -1,0 +1,1 @@
+export { ProductPromoCardSection } from "./ProductPromoCardSection";
